@@ -1,0 +1,208 @@
+--AddressBookSerice
+===========================================================
+-- UC1 Creating database as AddessBookService
+===========================================================
+
+ MySQL  localhost:3306 ssl  SQL > create database AddressBookService;
+                             Query OK, 1 row affected (0.6646 sec)
+ 
+MySQL  localhost:3306 ssl  SQL > use AddressBookService
+Default schema set to `AddressBookService`.
+Fetching table and column names from `addressbookservice` for auto-completion... Press ^C to stop.
+ 
+MySQL  localhost:3306 ssl  addressbookservice  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| addressbookservice |
+| demokey            |
+| information_schema |
+| mysql              |
+| pay_roll           |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.0015 sec)
+===========================================================
+-- UC2  creating table as AddressBook with attributes
+===========================================================
+ 
+MySQL  localhost:3306 ssl  addressbookservice  SQL > create table AddressBook (
+                                                   -> FirstName varchar(100),
+                                                   -> LastName varchar(100),
+                                                   -> address varchar(150),
+                                                   -> city varchar(100),
+                                                   -> State varchar(100),
+                                                   -> zip varchar(100),
+                                                   -> phoneNumber double,
+                                                   -> email varchar(200));
+Query OK, 0 rows affected (2.7034 sec)
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > desc AddressBook
+-------------+----------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| firstName   | varchar(100)  | NO   |     | NULL    |       |
+| lastName    | varchar(100)  | NO   |     | NULL    |       |
+| address     | varchar(150)  | NO   |     | NULL    |       |
+| city        | varchar(100)  | NO   |     | NULL    |       |
+| state       | varchar(100)  | NO   |     | NULL    |       |
+| zip         | varchar(100)  | NO   |     | NULL    |       |
+| phoneNumber | double        | NO   |     | NULL    |       |
+| email       | varchar(150)  | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+8 rows in set (0.0554 sec)
+
+===================================================
+-- UC3 inserting new Contacts to AddressBook table
+===================================================
+MySQL  localhost:3306 ssl  addressbookservice  SQL > insert into AddressBook (FirstName,LastName,Address,city,zip,PhoneNumber,email) values('Vishal','Jagtap','Hadapsar pune','pune','412307',9442333456,'Raj@gemail.com');
+Query OK, 1 row affected (0.1296 sec)
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > select * from addressbook
+                                                   -> ;
++-----------+----------+---------------+------+-------+--------+-------------+---------------+
+| FirstName | LastName | address       | city | State | zip    | phoneNumber | email         |
++-----------+----------+---------------+------+-------+--------+-------------+---------------+
+| Vishal    | Jagtap   | Hadapsar pune | pune | NULL  | 412307 |  9122333456 | vj@gemail.com |
++-----------+----------+---------------+------+-------+--------+-------------+---------------+
+1 row in set (0.0899 sec)
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > insert into AddressBook (FirstName,LastName,Address,city,zip,PhoneNumber,email) values('Raj','Jagtap','Hadapsar pune','pune','412307',9442333456,'Raj@gemail.com');
+Query OK, 1 row affected (0.1296 sec)
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > insert into AddressBook (FirstName,LastName,Address,city,zip,PhoneNumber,email) values('ram','koli','Hadapsar pune','sangli','315406',9442334256,'Ram@gemail.com');
+Query OK, 1 row affected (0.0961 sec)
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > select * from addressbook ;
++-----------+----------+---------------+--------+-------+--------+-------------+----------------+
+| FirstName | LastName | address       | city   | State | zip    | phoneNumber | email          |
++-----------+----------+---------------+--------+-------+--------+-------------+----------------+
+| Vishal    | Jagtap   | Hadapsar pune | pune   | NULL  | 412307 |  9122333456 | vj@gemail.com  |
+| Raj       | Jagtap   | Hadapsar pune | pune   | NULL  | 412307 |  9442333456 | Raj@gemail.com |
+| ram       | koli     | Hadapsar pune | sangli | NULL  | 315406 |  9442334256 | Ram@gemail.com |
++-----------+----------+---------------+--------+-------+--------+-------------+----------------+
+3 rows in set (0.0007 sec
+
+===========================================================
+--> UC4 editing the existing contact by their firstname
+===========================================================
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > update addressbook set lastname='salunkhe' where firstname='raj';
+Query OK, 1 row affected (0.1346 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > select * from addressbook ;
++-----------+----------+---------------+--------+-------+--------+-------------+----------------+
+| FirstName | LastName | address       | city   | State | zip    | phoneNumber | email          |
++-----------+----------+---------------+--------+-------+--------+-------------+----------------+
+| Vishal    | Jagtap   | Hadapsar pune | pune   | NULL  | 412307 |  9122333456 | vj@gemail.com  |
+| Raj       | salunkhe | Hadapsar pune | pune   | NULL  | 412307 |  9442333456 | Raj@gemail.com |
+| ram       | koli     | Hadapsar pune | sangli | NULL  | 315406 |  9442334256 | Ram@gemail.com |
++-----------+----------+---------------+--------+-------+--------+-------------+----------------+
+3 rows in set (0.0545 sec)
+
+===========================================================
+-- UC5 -deleting the contact by their lastname
+===========================================================
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > delete from addressbook where Firstname='ram';
+Query OK, 1 row affected (0.1676 sec)
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > select * from addressbook ;
++-----------+----------+---------------+------+-------+--------+-------------+----------------+
+| FirstName | LastName | address       | city | State | zip    | phoneNumber | email          |
++-----------+----------+---------------+------+-------+--------+-------------+----------------+
+| Vishal    | Jagtap   | Hadapsar pune | pune | NULL  | 412307 |  9122333456 | vj@gemail.com  |
+| Raj       | salunkhe | Hadapsar pune | pune | NULL  | 412307 |  9442333456 | Raj@gemail.com |
++-----------+----------+---------------+------+-------+--------+-------------+----------------+
+2 rows in set (0.0005 sec)
+
+===========================================================
+--> UC6 retrieving the contact by city or state
+===========================================================
+
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > update addressbook set State='maharastra' where firstname='raj';
+Query OK, 1 row affected (0.1399 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > select * from addressbook ;
++-----------+----------+---------------+------+------------+--------+-------------+----------------+
+| FirstName | LastName | address       | city | State      | zip    | phoneNumber | email          |
++-----------+----------+---------------+------+------------+--------+-------------+----------------+
+| Vishal    | Jagtap   | Hadapsar pune | pune | NULL       | 412307 |  9122333456 | vj@gemail.com  |
+| Raj       | salunkhe | Hadapsar pune | pune | maharastra | 412307 |  9442333456 | Raj@gemail.com |
++-----------+----------+---------------+------+------------+--------+-------------+----------------+
+2 rows in set (0.0204 sec)
+
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > select * from addressbook where city='pune' or state='maharastra';
++-----------+----------+---------------+------+------------+--------+-------------+----------------+
+| FirstName | LastName | address       | city | State      | zip    | phoneNumber | email          |
++-----------+----------+---------------+------+------------+--------+-------------+----------------+
+| Vishal    | Jagtap   | Hadapsar pune | pune | NULL       | 412307 |  9122333456 | vj@gemail.com  |
+| Raj       | salunkhe | Hadapsar pune | pune | maharastra | 412307 |  9442333456 | Raj@gemail.com |
++-----------+----------+---------------+------+------------+--------+-------------+----------------+
+2 rows in set (0.0008 sec)
+
+=============================================
+-- UC7 size of addressbook by city and state
+=============================================
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > select count(firstname) from addressbook where city='pune';
++------------------+
+| count(firstname) |
++------------------+
+|                2 |
++------------------+
+1 row in set (0.0601 sec)
+
+=====================================================
+-- UC8 soriting the name alphbetically for given firstName
+=====================================================
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > select firstname,city from addressbook order by firstname;
++-----------+------+
+| firstname | city |
++-----------+------+
+| Raj       | pune |
+| Vishal    | pune |
++-----------+------+
+2 rows in set (0.0491 sec)
+ 
+
+==================================================================
+-- UC9- altering the table with addressbook name and contact type
+==================================================================
+
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > alter table AddressBook ADD ContactType varchar(100);
+Query OK, 0 rows affected (0.7612 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > select * from addressbook ;
++-----------+----------+---------------+------+------------+--------+-------------+----------------+----------+-------------+
+| FirstName | LastName | address       | city | State      | zip    | phoneNumber | email          | BookName | ContactType |
++-----------+----------+---------------+------+------------+--------+-------------+----------------+----------+-------------+
+| Vishal    | Jagtap   | Hadapsar pune | pune | NULL       | 412307 |  9122333456 | vj@gemail.com  | NULL     | NULL        |
+| Raj       | salunkhe | Hadapsar pune | pune | maharastra | 412307 |  9442333456 | Raj@gemail.com | NULL     | NULL        |
++-----------+----------+---------------+------+------------+--------+-------------+----------------+----------+-------------+
+2 rows in set (0.0007 sec)
+
+========================================================
+-- UC10 ability to get count of contacts by contacttype
+========================================================
+
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > update addressbook set contactType='friend'  where firstname='raj';
+Query OK, 1 row affected (0.0939 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > update addressbook set contactType='Famely'  where firstname='vishal';
+Query OK, 1 row affected (0.0960 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > select * from addressbook ;
++-----------+----------+---------------+------+------------+--------+-------------+----------------+----------+-------------+
+| FirstName | LastName | address       | city | State      | zip    | phoneNumber | email          | BookName | ContactType |
++-----------+----------+---------------+------+------------+--------+-------------+----------------+----------+-------------+
+| Vishal    | Jagtap   | Hadapsar pune | pune | NULL       | 412307 |  9122333456 | vj@gemail.com  | NULL     | Famely      |
+| Raj       | salunkhe | Hadapsar pune | pune | maharastra | 412307 |  9442333456 | Raj@gemail.com | NULL     | friend      |
++-----------+----------+---------------+------+------------+--------+-------------+----------------+----------+-------------+
+2 rows in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  addressbookservice  SQL > select count(firstname) from addressbook where contactType='famely';
++------------------+
+| count(firstname) |
++------------------+
+|                1 |
++------------------+
+1 row in set (0.0009 sec)
